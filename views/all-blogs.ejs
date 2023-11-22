@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Blogs</title>
+</head>
+<body>
+  <h1>All Blogs</h1>
+
+  <% if (user) { %>
+   <h1><%= user.firstname %></h1>
+  <% } else { %>
+   <h1>No User Logged In</h1>
+  <% } %>
+
+  <% blogs.forEach(blog => { %>
+
+    <div class="blog">
+      <a href="/blogs/<%= blog.id %>">
+        <h3><%= blog.title %></h3>
+      </a>
+      <p>
+        <small>
+          Written by 
+          <a href="/users/<%= blog.author.id %>">
+            <%= blog.author.firstname %> <%= blog.author.lastname %>
+          </a>
+
+        </small><br>
+        
+        <%= blog.body %>
+
+        <% if (user) { %>
+          <form action="/like" method="post">
+            <input hidden type="text" name="blog" value="<%=blog.id %>"><br>
+            <input hidden type="text" name="user" value="<%=user.id %>">  ><br>
+            <button>like</button>
+          </form>
+        <% } %>
+
+      </p>
+    </div>
+
+  <% }); %>
+
+</body>
+</html>
